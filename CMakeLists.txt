@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(MicroRovCore)
+project(PolitoceanMicroRov)
 set(CMAKE_CXX_STANDARD 11)
 
 # Add politocean common libs
