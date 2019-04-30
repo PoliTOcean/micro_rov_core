@@ -8,6 +8,7 @@ using namespace std;
 using namespace cv;
 using namespace Politocean;
 using namespace Politocean::Constants;
+using namespace Politocean::Constants::MicroRov;
 
 int main(){
   
@@ -17,10 +18,10 @@ int main(){
   vector <uchar> encoded;
   VideoCapture cap(0);
   if(!cap.isOpened()){
-    camera_publisher.publish(Topics::ERRORS, MicroRov::CAMERA_ERROR);
+    camera_publisher.publish(Common::Topics::ERRORS, "Camera error");
     return -1;
   }   
-  while(1){
+  while(camera_publisher.is_connected()){
     Mat frame, decoded_frame;
     cap >> frame;
     if(frame.size().width==0)continue;
