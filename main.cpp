@@ -12,6 +12,7 @@
 using namespace std;
 using namespace cv;
 using namespace Politocean;
+using namespace Politocean::RPi;
 using namespace Politocean::Constants;
 using namespace Politocean::Constants::MicroRov;
 
@@ -22,16 +23,24 @@ void set_vel(const std::string& velocity){
 }
 
 void set_action(const std::string& action){
+  if(action == to_string("start")){
+    motor1.startPwm();
+    motor2.startPwm();
+  }
+  else if(action == to_string("stop")){
+    motor1.stopPwm();
+    motor2.stopPwm();
+  }
   return;
 }
 
 int main(){
-  RPi::Controller ctrl1;
-  RPi::Controller ctrl2;
-  RPi::PwmMotor motor1(&ctrl1,0,1,1,1);
-  RPi::PwmMotor motor2(&ctrl2,0,2,2,2);
+  Controller ctrl1;
+  Controller ctrl2;
+  PwmMotor motor1(&ctrl1,0,1,1,1);
+  PwmMotor motor2(&ctrl2,0,2,2,2);
   Publisher camera_publisher(Constants::Hmi::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
-  Subscriber MotorSubscriber(Constants::Rov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
+  Subscriber MotorSubscriber(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
   MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_COMMANDS, &set_action);
   MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_VELOCITY, &set_vel);
   MotorSubscriber.connect();
