@@ -23,7 +23,7 @@ void set_vel(const std::string& velocity){
 }
 
 void set_action(const std::string& action){
-  if(action == to_string("start")){
+ /* if(action == to_string("start")){
     motor1.startPwm();
     motor2.startPwm();
   }
@@ -31,6 +31,7 @@ void set_action(const std::string& action){
     motor1.stopPwm();
     motor2.stopPwm();
   }
+  */
   return;
 }
 
