@@ -39,7 +39,7 @@ int main(){
   Controller ctrl2;
   PwmMotor motor1(&ctrl1,0,1,1,1);
   PwmMotor motor2(&ctrl2,0,2,2,2);
-  Publisher camera_publisher(Constants::Hmi::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
+  Publisher camera_publisher(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
   Subscriber MotorSubscriber(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
   MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_COMMANDS, &set_action);
   MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_VELOCITY, &set_vel);
