@@ -15,7 +15,7 @@ add_executable(MicroRovCore main.cpp)
 target_link_libraries(MicroRovCore -lpaho-mqttpp3 
     PolitoceanCommon::Publisher    #publisher library
     PolitoceanCommon::Subscriber   #Subscriber library
-    PolitoceanRovArmCore::Controller #Controller library
-    PolitoceanRovArmCore::PwmMotor   #PwmMotor library
+    RovCommon::Controller #Controller library
+    RovCommon::PwmMotor   #PwmMotor library
     ${OpenCV_LIBS}                 #opencv libraries
 )
