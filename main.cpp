@@ -22,27 +22,7 @@ PwmMotor brushlessR(&ctrl,0,2,2,2); // Bisogna inserire i valori sopra;
 void set_vel(const std::string& velocity){
   return;
 }
-/*
-class Listener
-{
-  string action_;
 
-public:
-  void listen(const string& msg, const string& topic);
-
-  string action();
-};
-
-void Listener::listen(const string& msg)
-{
-  action_ = msg;
-}
-
-string Listener::action()
-{
-  return action_;
-}
-*/
 void set_action(const std::string& action){
   if(action.compare("start")){
     brushlessL.startPwm();
