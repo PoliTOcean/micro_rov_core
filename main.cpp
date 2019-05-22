@@ -17,32 +17,12 @@ using namespace Politocean::Constants::MicroRov;
 
 Controller ctrl;
 PwmMotor brushlessL(&ctrl,0,1,1,1); // int dirPin - PwmPin - minPwm - maxPwm
-PwmMotor brushlessR(&ctrl,0,2,2,2); // Bisogna inserire i valori sopra;
+PwmMotor brushlessR(&ctrl,0,2,2,2); //    Bisogna inserire i valori sopra;
 
 void set_vel(const std::string& velocity){
   return;
 }
-/*
-class Listener
-{
-  string action_;
 
-public:
-  void listen(const string& msg, const string& topic);
-
-  string action();
-};
-
-void Listener::listen(const string& msg)
-{
-  action_ = msg;
-}
-
-string Listener::action()
-{
-  return action_;
-}
-*/
 void set_action(const std::string& action){
   if(action.compare("start")){
     brushlessL.startPwm();
@@ -59,7 +39,6 @@ int main(){
   Publisher camera_publisher(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
 
   Subscriber motorSubscriber(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
- //Listener listener;
 
   brushlessL.setup();
   brushlessR.setup();
