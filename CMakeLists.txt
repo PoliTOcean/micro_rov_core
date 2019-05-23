@@ -8,6 +8,7 @@ include_directories(politocean_common/include)
 add_subdirectory(rov_common)
 include_directories(rov_common/include)
 
+add_subdirectory(libs)
 
 find_package( OpenCV REQUIRED )
 
@@ -16,6 +17,6 @@ target_link_libraries(MicroRovCore -lpaho-mqttpp3
     PolitoceanCommon::Publisher
     PolitoceanCommon::Subscriber
     RovCommon::Controller
-    PolitoceanMicroRovArmCore::Brushless
+    PolitoceanMircoRovCore::Brushless
     ${OpenCV_LIBS}
 )

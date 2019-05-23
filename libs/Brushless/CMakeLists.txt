@@ -4,7 +4,7 @@ project(Brushless VERSION 1.0.0 LANGUAGES CXX)
 add_library(Brushless
         Brushless.cpp)
 
-add_library(PolitoceanMicroRovArmCore::Brushless ALIAS Brushless)
+add_library(PolitoceanMircoRovCore::Brushless ALIAS Brushless)
 
 target_include_directories(Brushless
         PUBLIC
@@ -14,14 +14,14 @@ target_include_directories(Brushless
             ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(Brushless mosquittopp PolitoceanMicroRovArmCore::logger)
+target_link_libraries(Brushless mosquittopp)
 
 target_compile_features(Brushless PRIVATE cxx_auto_type)
 target_compile_options(Brushless PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>)
 
 include(GNUInstallDirs)
 install(TARGETS Brushless
-        EXPORT PolitoceanMicroRovArmCoreTargets
+        EXPORT PolitoceanMircoRovCoreTargets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
