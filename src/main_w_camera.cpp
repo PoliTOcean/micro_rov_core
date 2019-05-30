@@ -1,13 +1,12 @@
 #include <iostream>
+#include <string>
 #include "PolitoceanConstants.h"
-#include <Publisher.h>
-#include <Subscriber.h>
+#include "Publisher.h"
+#include "Subscriber.h"
 #include <opencv2/opencv.hpp>
 #include <unistd.h>
-//#include <wiringPi.h>
-//#include <softPwm.h>
-#include <PwmMotor.h>
-#include <Controller.h>
+#include "PwmMotor.h"
+#include "Controller.h"
 
 using namespace std;
 using namespace cv;
@@ -16,43 +15,50 @@ using namespace Politocean::RPi;
 using namespace Politocean::Constants;
 using namespace Politocean::Constants::MicroRov;
 
-bool action,vel;
+Controller ctrl;
+PwmMotor brushlessL(&ctrl,0,1,1,1); // int dirPin - PwmPin - minPwm - maxPwm
+PwmMotor brushlessR(&ctrl,0,2,2,2); // Bisogna inserire i valori sopra;
 
 void set_vel(const std::string& velocity){
   return;
 }
 
 void set_action(const std::string& action){
- /* if(action == to_string("start")){
-    motor1.startPwm();
-    motor2.startPwm();
+  if(action.compare("start")){
+    brushlessL.startPwm();
+    brushlessR.startPwm();
   }
-  else if(action == to_string("stop")){
-    motor1.stopPwm();
-    motor2.stopPwm();
+  else if(action.compare("stop")){
+    brushlessL.stopPwm();
+    brushlessR.stopPwm();
   }
-  */
   return;
 }
 
 int main(){
-  Controller ctrl1;
-  Controller ctrl2;
-  PwmMotor motor1(&ctrl1,0,1,1,1);
-  PwmMotor motor2(&ctrl2,0,2,2,2);
   Publisher camera_publisher(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
-  Subscriber MotorSubscriber(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
-  MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_COMMANDS, &set_action);
-  MotorSubscriber.subscribeTo(Constants::Topics::MICROROV_VELOCITY, &set_vel);
-  MotorSubscriber.connect();
+
+  Subscriber motorSubscriber(Constants::MicroRov::IP_ADDRESS, Constants::MicroRov::MICRO_ROV_ID);
+ //Listener listener;
+
+  brushlessL.setup();
+  brushlessR.setup();
+
+  motorSubscriber.subscribeTo(Constants::Topics::MICROROV_COMMANDS, &set_action);
+  motorSubscriber.subscribeTo(Constants::Topics::MICROROV_VELOCITY, &set_vel);
+
+  motorSubscriber.connect();
   camera_publisher.connect();
+  sleep(3);
   vector <uchar> encoded;
   VideoCapture cap(0);
   if(!cap.isOpened()){
-    camera_publisher.publish(Constants::Topics::ERRORS, "Camera error");
+    camera_publisher.publish(Constants::Topics::ERRORS,"Camera Error");
     return -1;
   }   
-  while(MotorSubscriber.is_connected()){
+  while(motorSubscriber.is_connected()){
+  }
+  /*
     if(camera_publisher.is_connected()){
       Mat frame, decoded_frame;
       cap >> frame;
@@ -64,10 +70,9 @@ int main(){
       char c=(char)waitKey(25);
       if(c==27)
         break;
-      
     }
-    //
-  }
+    */
+
 }
 
 

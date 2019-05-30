@@ -3,22 +3,23 @@ project(PolitoceanMicroRov)
 set(CMAKE_CXX_STANDARD 11)
 
 add_subdirectory(libs)
+include_directories(politocean_common/include)
 
-# Add politocean common libs
-add_subdirectory(politocean_common)
+add_subdirectory(rov_common)
+include_directories(rov_common/include)
 include_directories(politocean_common/include)
 include_directories(include)
 find_package(OpenCV REQUIRED)
 
-# Add executable
-add_executable(MicroRovCore main.cpp)
+add_subdirectory(libs)
 
-target_link_libraries(MicroRovCore 
-                        # Add link libraries
-                        -lpaho-mqttpp3                 #mqtt library 
-                        PolitoceanCommon::Publisher    #publisher library
-                        PolitoceanCommon::Subscriber   #Subscriber library
-                        PolitoceanMicroRov::PwmMotor   #PwmMotor library
-                        PolitoceanMicroRov::Controller #Controller library
-                        ${OpenCV_LIBS}                 #opencv libraries
+find_package( OpenCV REQUIRED )
+
+add_executable(MicroRovCore src/main.cpp)
+target_link_libraries(MicroRovCore -lpaho-mqttpp3 
+    PolitoceanCommon::Publisher
+    PolitoceanCommon::Subscriber
+    RovCommon::Controller
+    PolitoceanMircoRovCore::Brushless
+    ${OpenCV_LIBS}
 )
