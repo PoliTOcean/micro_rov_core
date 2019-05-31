@@ -9,14 +9,20 @@ add_subdirectory(rov_common)
 include_directories(rov_common/include)
 
 add_subdirectory(libs)
+include_directories(include)
 
 find_package( OpenCV REQUIRED )
 
 add_executable(MicroRovCore src/main.cpp)
-target_link_libraries(MicroRovCore -lpaho-mqttpp3 
+add_executable(Client src/client.cpp)
+add_executable(Server src/server.cpp)
+target_link_libraries(MicroRovCore -lpaho-mqttpp3
     PolitoceanCommon::Publisher
     PolitoceanCommon::Subscriber
     RovCommon::Controller
     PolitoceanMircoRovCore::Brushless
     ${OpenCV_LIBS}
 )
+
+target_link_libraries( Client ${OpenCV_LIBS})
+target_link_libraries( Server ${OpenCV_LIBS})
