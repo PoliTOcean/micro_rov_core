@@ -9,7 +9,7 @@
 #include <netinet/in.h>
 #include <cstring>
 #include "config.h"
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
@@ -36,7 +36,6 @@ int main(int argc, char* argv[])
     Mat frame, send;
     vector < uchar > encoded;
     VideoCapture cap(0); // Grab the camera
-    namedWindow("send", CV_WINDOW_AUTOSIZE);
     if (!cap.isOpened()) {
         cerr << "OpenCV Failed to open camera";
         exit(1);
@@ -53,7 +52,6 @@ int main(int argc, char* argv[])
         compression_params.push_back(jpegqual);
 
         imencode(".jpg", send, encoded, compression_params);
-        imshow("send", send);
         int total_pack = 1 + (encoded.size() - 1) / PACK_SIZE;
 
         if (sendto(sock,&total_pack, sizeof(int), 0, (struct sockaddr*) &saddr,sizeof(struct sockaddr_in)) != sizeof(int))     //send n. of packets necessary to send the frame
@@ -68,8 +66,6 @@ int main(int argc, char* argv[])
                 cerr << "sendto failed" << endl;
                 exit(1);
             }
-
-        waitKey(FRAME_INTERVAL);
 
         clock_t next_cycle = clock();
         double duration = (next_cycle - last_cycle) / (double) CLOCKS_PER_SEC;

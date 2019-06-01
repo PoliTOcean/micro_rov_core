@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include "config.h"
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 
 #define BUF_LEN 65540 // Larger than maximum UDP packet size
 
