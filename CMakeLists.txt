@@ -16,6 +16,7 @@ find_package( OpenCV REQUIRED )
 add_executable(MicroRovCore src/main.cpp)
 add_executable(Client src/client.cpp)
 add_executable(Server src/server.cpp)
+add_executable(Sender src/sender.cpp)
 target_link_libraries(MicroRovCore -lpaho-mqttpp3
     PolitoceanCommon::Publisher
     PolitoceanCommon::Subscriber
@@ -26,3 +27,4 @@ target_link_libraries(MicroRovCore -lpaho-mqttpp3
 
 target_link_libraries( Client ${OpenCV_LIBS})
 target_link_libraries( Server ${OpenCV_LIBS})
+target_link_libraries( Sender ${OpenCV_LIBS})
